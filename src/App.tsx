@@ -1,54 +1,55 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import databaseService from './services/databaseService';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
+import "./App.css";
+import databaseService from "./services/databaseService";
 
-function App() {
-  const [formData, setFormData] = useState({
-    field1: '',
-    field2: ''
+interface AppFormData {
+  field1: string;
+  field2: string;
+}
+
+const App: React.FC = () => {
+  const [formData, setFormData] = useState<AppFormData>({
+    field1: "",
+    field2: ""
   });
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [connectionStatus, setConnectionStatus] = useState('checking');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [connectionStatus, setConnectionStatus] = useState<
+    "checking" | "connected" | "disconnected" | "error"
+  >("checking");
 
   useEffect(() => {
-    // Test database connection on component mount
     const testConnection = async () => {
       try {
         const isConnected = await databaseService.testConnection();
-        setConnectionStatus(isConnected ? 'connected' : 'disconnected');
-      } catch (err) {
-        setConnectionStatus('error');
-        setError('Failed to connect to database');
+        setConnectionStatus(isConnected ? "connected" : "disconnected");
+      } catch {
+        setConnectionStatus("error");
+        setError("Failed to connect to database");
       }
     };
     testConnection();
   }, []);
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
 
     try {
-      await databaseService.saveFormData(formData);
-      // Clear form after successful submission
-      setFormData({
-        field1: '',
-        field2: ''
-      });
-      alert('Data saved successfully!');
-    } catch (err) {
-      setError('Failed to save data. Please try again.');
-      console.error('Form submission error:', err);
+      await databaseService.saveFormData(formData as any);
+      setFormData({ field1: "", field2: "" });
+      alert("Data saved successfully!");
+    } catch {
+      setError("Failed to save data. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -87,17 +88,17 @@ function App() {
               disabled={isLoading}
             />
           </div>
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             className="submit-button"
-            disabled={isLoading || connectionStatus !== 'connected'}
+            disabled={isLoading || connectionStatus !== "connected"}
           >
-            {isLoading ? 'Saving...' : 'Submit'}
+            {isLoading ? "Saving..." : "Submit"}
           </button>
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default App;
