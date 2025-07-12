@@ -1,9 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\src",
-    "\\src\\services"
+    "\\backend",
+    "\\frontend",
+    "\\frontend\\src",
+    "\\frontend\\src\\services"
   ],
-  "SelectedNode": "\\src\\services\\awsConfig.ts",
+  "SelectedNode": "\\frontend\\.gitignore",
   "PreviewInSolutionExplorer": false
 }
