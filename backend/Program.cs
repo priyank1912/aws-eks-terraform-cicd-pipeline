@@ -25,22 +25,18 @@ builder.Services.AddCors();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(options =>
 {
-    app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Minimal API v1");
-    });
-}
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Minimal API v1");
+});
 
 app.UseCors(builder =>
     builder.AllowAnyOrigin()
            .AllowAnyMethod()
            .AllowAnyHeader());
 
-string connectionString = "User Id=admin;Password=Vep7an~Q$Y*aj~w]eWHcQR6LH?nt;Data Source=localhost:1521/TFEKSDB_A"; // Replace with actual credentials
+string connectionString = "User Id=admin;Password=Vep7an~Q$Y*aj~w]eWHcQR6LH?nt;Data Source=192.168.29.11:1521/TFEKSDB_A"; // Replace with the actual localmachine ipv4 address
 
 app.MapPost("/api/save-user", async (UserDto user) =>
 {

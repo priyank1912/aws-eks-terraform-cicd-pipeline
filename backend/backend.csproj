@@ -5,12 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <Using Include="Microsoft.AspNetCore.Http" />
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Microsoft.AspNetCore.Http" />
-  </ItemGroup>
+  <None Update="wwwroot\swagger\**\*">
+    <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+  </None>
+</ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="23.9.0" />

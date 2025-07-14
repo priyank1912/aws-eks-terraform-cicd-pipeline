@@ -29,13 +29,5 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
-  },
-  "external": [
-    "oci-common",
-    "oci-objectstorage",
-    "oci-secrets",
-    "@azure/app-configuration",
-    "@azure/identity",
-    "@azure/keyvault-secrets"
-  ]
+  }
 }
