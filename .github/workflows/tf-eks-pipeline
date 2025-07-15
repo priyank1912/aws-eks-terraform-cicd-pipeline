@@ -1,0 +1,11 @@
+name: TF-EKS pipeline
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-Latest
+    steps:
+    - name: checkout code
+      run: echo "setting up environment"  
