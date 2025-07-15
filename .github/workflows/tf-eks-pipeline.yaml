@@ -8,4 +8,24 @@ jobs:
     runs-on: ubuntu-Latest
     steps:
     - name: checkout code
-      run: echo "setting up environment"  
+      uses: actions/checkout@v4
+      
+    - name: AWS CLI configure
+      uses: aws-actions/configure-aws-credentials@v4.1.0
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ secrets.AWS_REGION }}
+
+    - name: Docker Login
+      run: aws ecr get-login-password --region=${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{secrets.AWS_ACCESS_KEY_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com
+      
+    - name: Build and Push Backend Docker Image
+      run: |
+        docker build -t ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/backend_repo:latest ./backend
+        docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/backend_repo:latest
+
+    - name: Build and Push Frontend Docker Image
+      run: |
+        docker build -t ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/frontend_repo:latest ./frontend
+        docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/frontend_repo:latest
