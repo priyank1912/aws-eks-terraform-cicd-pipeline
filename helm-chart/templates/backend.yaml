@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  labels:
+    app: aws-eks-terraform-cicd-pipeline-backend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aws-eks-terraform-cicd-pipeline-backend
+  template:
+    metadata:
+      labels:
+        app: aws-eks-terraform-cicd-pipeline-backend
+    spec:
+      containers:
+      - name: backend
+        image: 932747071324.dkr.ecr.ap-south-1.amazonaws.com/backend_repo:latest
+        ports:
+        - containerPort: 80

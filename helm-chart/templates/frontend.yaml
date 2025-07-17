@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: aws-eks-terraform-cicd-pipeline-frontend-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: aws-eks-terraform-cicd-pipeline-frontend
+  template:
+    metadata:
+      labels:
+        app: aws-eks-terraform-cicd-pipeline-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: 932747071324.dkr.ecr.ap-south-1.amazonaws.com/frontend_repo:latest
+        ports:
+        - containerPort: 80
