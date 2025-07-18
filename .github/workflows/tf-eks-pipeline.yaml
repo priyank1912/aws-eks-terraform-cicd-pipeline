@@ -40,22 +40,22 @@ jobs:
     #   docker build -t ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/frontend_repo:latest ./frontend
     #   docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/frontend_repo:latest
     #
-    # # Install kubectl for interacting with Kubernetes clusters
-    # - name: Set up kubectl
-    #   run: |
-    #   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-    #   chmod +x kubectl
-    #   sudo mv kubectl /usr/local/bin/
-    #
-    # # Install Helm for managing Kubernetes applications
-    # - name: Setup Helm
-    #   run: |
-    #   curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
-    #
-    # # Update kubeconfig to access the EKS cluster
-    # - name: Update kubeconfig for EKS
-    #   run: |
-    #   aws eks update-kubeconfig --name ${{secrets.EKS_CLUSTER_NAME}} --region ${{secrets.AWS_REGION}}
+    # Install kubectl for interacting with Kubernetes clusters
+    - name: Set up kubectl
+      run: |
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+        chmod +x kubectl
+        sudo mv kubectl /usr/local/bin/
+
+    # Install Helm for managing Kubernetes applications
+    - name: Setup Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
+    # Update kubeconfig to access the EKS cluster
+    - name: Update kubeconfig for EKS
+      run: |
+        aws eks update-kubeconfig --name ${{secrets.EKS_CLUSTER_NAME}} --region ${{secrets.AWS_REGION}}
     - name: Deploy Helm chart
       run: |
         helm upgrade --install aws-eks-terraform-cicd-pipeline ./helm-chart \
