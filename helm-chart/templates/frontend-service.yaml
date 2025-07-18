@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-service
+  namespace: prod
+  labels:
+    app: aws-eks-terraform-cicd-pipeline-frontend
+spec:
+  selector:
+    app: aws-eks-terraform-cicd-pipeline-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: ClusterIP
