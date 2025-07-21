@@ -6,7 +6,7 @@ import axios from "axios";
 interface FormData {
   [key: string]: string;
 }
-const API_BASE_URL = "http://backend-service:80/api";
+const API_BASE_URL = "https://backend-service:80/api";
 
 export const saveUser = async (user: { username: string; email: string }) => {
   console.log("Sending payload:", user);
