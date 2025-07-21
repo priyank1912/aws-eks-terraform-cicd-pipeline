@@ -6,8 +6,12 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS":443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:575791034546:certificate/aabcf4ed-10ad-4c9a-b992-9b026606ec8e
+    alb.ingress.kubernetes.io/ssl-redirect: '443'
 spec:
+  ingressClassName: alb
   rules:
     - host: www.ajantacorporation.com
       http:
