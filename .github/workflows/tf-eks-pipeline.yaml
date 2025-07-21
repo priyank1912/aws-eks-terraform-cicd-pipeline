@@ -23,23 +23,23 @@ jobs:
         aws ecr describe-repositories --region ${{secrets.AWS_REGION}} || echo "ECR access test failed"
 
     # The following steps are commented out and not needed:
-    #
-    # # Log in to AWS ECR using Docker
-    # - name: Docker Login
-    #   run: aws ecr get-login-password --region=${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com
-    #
-    # # Build and push the backend Docker image to ECR
-    # - name: Build and Push Backend Docker Image
-    #   run: |
-    #   docker build -t ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/backend_repo:latest ./backend
-    #   docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/backend_repo:latest
-    #
-    # # Build and push the frontend Docker image to ECR
-    # - name: Build and Push Frontend Docker Image
-    #   run: |
-    #   docker build -t ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/frontend_repo:latest ./frontend
-    #   docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/frontend_repo:latest
-    #
+    
+    # Log in to AWS ECR using Docker
+    - name: Docker Login
+      run: aws ecr get-login-password --region=${{secrets.AWS_REGION}} | docker login --username AWS --password-stdin ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com
+    
+    # Build and push the backend Docker image to ECR
+    - name: Build and Push Backend Docker Image
+      run: |
+        docker build -t ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/backend_repo:latest ./backend
+        docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/backend_repo:latest
+    
+    # Build and push the frontend Docker image to ECR
+    - name: Build and Push Frontend Docker Image
+      run: |
+        docker build -t ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/frontend_repo:latest ./frontend
+        docker push ${{secrets.AWS_ACCOUNT_ID}}.dkr.ecr.${{secrets.AWS_REGION}}.amazonaws.com/frontend_repo:latest
+    
     # Install kubectl for interacting with Kubernetes clusters
     - name: Set up kubectl
       run: |
