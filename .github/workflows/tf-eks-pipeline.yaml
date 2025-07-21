@@ -21,8 +21,6 @@ jobs:
       run: |
         aws sts get-caller-identity
         aws ecr describe-repositories --region ${{secrets.AWS_REGION}} || echo "ECR access test failed"
-
-    # The following steps are commented out and not needed:
     
     # Log in to AWS ECR using Docker
     - name: Docker Login
