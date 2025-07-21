@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.OpenApi.Models;
-using Oracle.ManagedDataAccess.Client;
+using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +36,7 @@ app.UseCors(builder =>
            .AllowAnyMethod()
            .AllowAnyHeader());
 
-string connectionString = "User Id=admin;Password=Vep7an~Q$Y*aj~w]eWHcQR6LH?nt;Data Source=192.168.29.11:1521/TFEKSDB_A"; // Replace with the actual localmachine ipv4 address
+string connectionString = "Server=localhost,1433;Database=TFEKSDB;User Id=admin;Password=priyank1912;Encrypt=True;TrustServerCertificate=True;";
 
 app.MapPost("/api/save-user", async (UserDto user) =>
 {
@@ -45,13 +45,13 @@ app.MapPost("/api/save-user", async (UserDto user) =>
         return Results.BadRequest("Invalid user data.");
     }
 
-    using var connection = new OracleConnection(connectionString);
+    using var connection = new SqlConnection(connectionString);
     await connection.OpenAsync();
 
     using var command = connection.CreateCommand();
-    command.CommandText = "INSERT INTO \"ADMIN\".\"USERS\" (USERNAME, EMAIL) VALUES (:USERNAME, :EMAIL)";
-    command.Parameters.Add(new OracleParameter("USERNAME", user.Username));
-    command.Parameters.Add(new OracleParameter("EMAIL", user.Email));
+    command.CommandText = "INSERT INTO dbo.USERS (USERNAME, EMAIL) VALUES (@USERNAME, @EMAIL)";
+    command.Parameters.Add(new SqlParameter("@USERNAME", user.Username));
+    command.Parameters.Add(new SqlParameter("@EMAIL", user.Email));
 
     await command.ExecuteNonQueryAsync();
 
