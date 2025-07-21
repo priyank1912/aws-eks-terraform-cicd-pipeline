@@ -6,7 +6,7 @@ import axios from "axios";
 interface FormData {
   [key: string]: string;
 }
-const API_BASE_URL = "https://www.ajantacorporation.com/api";
+const API_BASE_URL = "/api";
 
 
 export const saveUser = async (user: { username: string; email: string }) => {
