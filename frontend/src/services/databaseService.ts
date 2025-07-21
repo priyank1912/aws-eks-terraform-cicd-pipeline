@@ -9,7 +9,7 @@ interface FormData {
 const API_BASE_URL = "http://backend-service:80/api";
 
 export const saveUser = async (user: { username: string; email: string }) => {
-  const response = await fetch(`${API_BASE_URL}/save-user`, {
+  const response = await fetch(`http://backend-service:80/api/save-user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -54,7 +54,7 @@ class DatabaseService {
   // Save form data (simulate backend call)
   async saveFormData(formData: FormData): Promise<any> {
     try {
-      const response = await axios.post("/api/save-data", {
+      const response = await axios.post("http://backend-service:80/api/save-data", {
         ...formData,
         timestamp: new Date().toISOString()
       });
