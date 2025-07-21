@@ -9,6 +9,7 @@ interface FormData {
 const API_BASE_URL = "http://backend-service:80/api";
 
 export const saveUser = async (user: { username: string; email: string }) => {
+  console.log("Sending payload:", user);
   const response = await fetch(`${API_BASE_URL}/save-user`, {
     method: "POST",
     headers: {
@@ -16,6 +17,9 @@ export const saveUser = async (user: { username: string; email: string }) => {
     },
     body: JSON.stringify(user),
   });
+
+  console.log("Response status:", response.status);
+  console.log("Response body:", await response.text());
 
   if (!response.ok) {
     throw new Error("Failed to save user");
