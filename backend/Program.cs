@@ -36,7 +36,7 @@ app.UseCors(builder =>
            .AllowAnyMethod()
            .AllowAnyHeader());
 
-string connectionString = "Server=localhost,1433;Database=TFEKSDB;User Id=admin;Password=priyank1912;Encrypt=True;TrustServerCertificate=True;";
+string connectionString = "Server=tf-eksdb.cv8cca6kyp9m.ap-south-1.rds.amazonaws.com;Database=TFEKSDB;User Id=admin;Password=priyank1912;Encrypt=True;TrustServerCertificate=True;";
 
 app.MapPost("/api/save-user", async (UserDto user) =>
 {
