@@ -9,7 +9,7 @@ interface FormData {
 const API_BASE_URL = "http://backend-service:80/api";
 
 export const saveUser = async (user: { username: string; email: string }) => {
-  const response = await fetch(`http://backend-service:80/api/save-user`, {
+  const response = await fetch(`${API_BASE_URL}/save-user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
