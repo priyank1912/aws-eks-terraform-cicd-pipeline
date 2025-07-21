@@ -6,7 +6,7 @@ import axios from "axios";
 interface FormData {
   [key: string]: string;
 }
-const API_BASE_URL = "http://backend-service/api";
+const API_BASE_URL = "http://172.20.7.92/api";
 
 export const saveUser = async (user: { username: string; email: string }) => {
   const response = await fetch(`${API_BASE_URL}/save-user`, {
