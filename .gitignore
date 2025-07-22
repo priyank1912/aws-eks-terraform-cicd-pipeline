@@ -2,4 +2,5 @@
 .env
 bastianhostkey.pem
 command.txt
-*.pem
+key.pem
+cert.pem
