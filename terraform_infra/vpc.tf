@@ -15,7 +15,7 @@ module "eksvpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.21.0"
 
-  name = "priyank-vpc"
+  name = "ENTER YOUR EKS VPC NAME HERE"
   cidr = var.eks_vpc_cidr
 
   azs                  = var.availability-zones

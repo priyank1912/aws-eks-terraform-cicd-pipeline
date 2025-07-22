@@ -14,7 +14,7 @@ variable "ami_id" {
   default     = "ami-0a1235697f4afa8a4" #for bastian host
 }
 variable "user" {
-  default = "priyank"
+  default = "ENTER YOU USERNAME"
 }
 variable "db_username" {
   description = "Database master username"
@@ -29,14 +29,14 @@ variable "db_password" {
 }
 variable "db_engine" {
   type    = string
-  default = "sqlserver-ex"
+  default = "ENTER YOUR DB ENGINE HERE" # e.g., "sqlserver-se", "sqlserver-ex", "sqlserver-web", "sqlserver-ee"
 }
 variable "db_engine_version" {
-  default = "15.00.4430.1.v1"
+  default = "ENTER YOUR DB ENGINE VERSION HERE" # e.g., "15.00.4043.16.v1"
 }
 variable "db_instance_class" {
   type    = string
-  default = "db.t3.micro"
+  default = "ENTER YOUR DB INSTANCE CLASS HERE" # e.g., "db.t3.medium"
 }
 variable "rds_cidr" {
   description = "CIDR block for the RDS VPC"
@@ -56,7 +56,7 @@ variable "rds_public_subnets" {
 variable "eks_cluster_name" {
   description = "Name of the EKS cluster"
   type        = string
-  default     = "my-cluster"
+  default     = "ENTER YOUR EKS CLUSTER NAME HERE"
 }
 variable "eks_instance_type" {
   description = "Instance type for EKS nodes"
