@@ -6,27 +6,35 @@ import axios from "axios";
 interface FormData {
   [key: string]: string;
 }
+
 const API_BASE_URL = "/api";
 
-
+// Improved saveUser: handle plain text response properly
 export const saveUser = async (user: { username: string; email: string }) => {
   console.log("Sending payload:", user);
-  const response = await fetch(`${API_BASE_URL}/save-user`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
 
-  console.log("Response status:", response.status);
-  console.log("Response body:", await response.text());
+  try {
+    const response = await fetch(`${API_BASE_URL}/save-user`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
 
-  if (!response.ok) {
-    throw new Error("Failed to save user");
+    const responseText = await response.text();
+    console.log("Response status:", response.status);
+    console.log("Response body:", responseText);
+
+    if (!response.ok) {
+      throw new Error(`Failed to save user: ${response.status}`);
+    }
+
+    return responseText;  // Since backend returns plain text like "User saved successfully."
+  } catch (error) {
+    console.error("Error in saveUser:", error);
+    throw error;
   }
-
-  return await response.json();
 };
 
 class DatabaseService {
@@ -56,12 +64,12 @@ class DatabaseService {
     return this.dbPassword;
   }
 
-  // Save form data (simulate backend call)
+  // Save form data (internal usage example)
   async saveFormData(formData: FormData): Promise<any> {
     try {
-      const response = await axios.post("http://backend-service:80/api/save-data", { //changed this url to use whole URL
+      const response = await axios.post("http://backend-service:80/api/save-data", {
         ...formData,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       });
       return response.data;
     } catch (error) {
